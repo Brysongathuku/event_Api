@@ -43,8 +43,8 @@ export const CustomersTable = pgTable("customers", {
   role: RoleEnum("role").default("user"),
   isVerified: boolean("is_verified").default(false),
   verificationCode: varchar("verification_code", { length: 10 }),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow(),
 });
 
 // Venues Table
@@ -54,7 +54,7 @@ export const VenuesTable = pgTable("venues", {
   address: text("address").notNull(),
   capacity: integer("capacity").notNull(),
   contactNumber: varchar("contact_number", { length: 20 }),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
 });
 
 // Events Table
@@ -62,9 +62,9 @@ export const EventsTable = pgTable("events", {
   eventID: serial("eventID").primaryKey(),
   title: varchar("title", { length: 200 }).notNull(),
   description: text("description"),
-  eventDate: timestamp("event_date").notNull(),
-  startTime: timestamp("start_time").notNull(),
-  endTime: timestamp("end_time"),
+  eventDate: timestamp("event_date", { mode: "string" }).notNull(),
+  startTime: timestamp("start_time", { mode: "string" }).notNull(),
+  endTime: timestamp("end_time", { mode: "string" }),
   ticketPrice: decimal("ticket_price", { precision: 10, scale: 2 }).notNull(),
   availableTickets: integer("available_tickets").notNull(),
   totalTickets: integer("total_tickets").notNull(),
@@ -72,8 +72,8 @@ export const EventsTable = pgTable("events", {
   venueID: integer("venueID").references(() => VenuesTable.venueID, {
     onDelete: "set null",
   }),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow(),
 });
 
 // Bookings Table
@@ -87,14 +87,13 @@ export const BookingsTable = pgTable("bookings", {
     .references(() => EventsTable.eventID, { onDelete: "cascade" }),
   numberOfTickets: integer("number_of_tickets").notNull().default(1),
   totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
-  bookingDate: timestamp("booking_date").defaultNow(),
+  bookingDate: timestamp("booking_date", { mode: "string" }).defaultNow(),
   bookingStatus: varchar("booking_status", { length: 20 }).default("Confirmed"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow(),
 });
 
 // Payments Table
-
 export const PaymentsTable = pgTable("payments", {
   paymentID: serial("paymentID").primaryKey(),
   customerID: integer("customerID")
@@ -105,11 +104,11 @@ export const PaymentsTable = pgTable("payments", {
     .references(() => BookingsTable.bookingID, { onDelete: "cascade" }),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
   paymentStatus: PaymentStatusEnum("payment_status").default("Pending"),
-  paymentDate: timestamp("payment_date").defaultNow(),
+  paymentDate: timestamp("payment_date", { mode: "string" }).defaultNow(),
   paymentMethod: varchar("payment_method", { length: 50 }),
   transactionID: varchar("transaction_id", { length: 100 }),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow(),
 });
 
 // Customer Support Tickets Table
@@ -121,16 +120,17 @@ export const CustomerSupportTicketsTable = pgTable("customer_support_tickets", {
   subject: varchar("subject", { length: 200 }).notNull(),
   description: text("description").notNull(),
   status: TicketStatusEnum("status").default("Open"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow(),
 });
 
 // RELATIONSHIPS
 
-// CustomersTable Relationships - 1 customer can have many bookings and support tickets
+// CustomersTable Relationships - 1 customer can have many bookings, support tickets, and payments
 export const CustomersRelations = relations(CustomersTable, ({ many }) => ({
   bookings: many(BookingsTable),
   supportTickets: many(CustomerSupportTicketsTable),
+  payments: many(PaymentsTable),
 }));
 
 // VenuesTable Relationships - 1 venue can have many events
@@ -163,11 +163,15 @@ export const BookingsRelations = relations(BookingsTable, ({ one }) => ({
   }),
 }));
 
-// PaymentsTable Relationships - 1 payment belongs to 1 booking
+// PaymentsTable Relationships - 1 payment belongs to 1 booking and 1 customer
 export const PaymentsRelations = relations(PaymentsTable, ({ one }) => ({
   booking: one(BookingsTable, {
     fields: [PaymentsTable.bookingID],
     references: [BookingsTable.bookingID],
+  }),
+  customer: one(CustomersTable, {
+    fields: [PaymentsTable.customerID],
+    references: [CustomersTable.customerID],
   }),
 }));
 

@@ -1,14 +1,19 @@
-import { TICustomer, TSCustomer } from "../Drizzle/schema";
 import { sql } from "drizzle-orm";
 import { eq } from "drizzle-orm";
 import db from "../Drizzle/db";
-import { CustomersTable } from "../Drizzle/schema";
-import { TSCustomerLoginInput } from "../Drizzle/schema";
+import { TICustomer, CustomersTable, TSCustomer } from "../Drizzle/schema";
 
-// create user  service
+//register a customer
 export const createCustomerService = async (user: TICustomer) => {
   await db.insert(CustomersTable).values(user);
   return "Customer added successfully";
+};
+
+export const verifyCustomerService = async (email: string) => {
+  await db
+    .update(CustomersTable)
+    .set({ isVerified: true, verificationCode: null })
+    .where(sql`${CustomersTable.email} = ${email}`);
 };
 
 export const customerLoginService = async (customer: TSCustomer) => {
@@ -27,6 +32,51 @@ export const customerLoginService = async (customer: TSCustomer) => {
   });
 };
 
+// export const getCustomerWithBookingsAndPaymentsService = async (id: number) => {
+//     return await db.query.CustomersTable.findFirst({
+//         where: eq(CustomersTable.customerID, id),
+//         columns: {
+//             firstName: true,
+//             lastName: true
+//         },
+//         with: {
+//             bookings: {
+//                 columns: {
+//                     bookingID: true,
+//                     rentalStartDate: true,
+//                     rentalEndDate: true,
+//                     totalAmount: true
+//                 },
+//                 with: {
+//                     payments: true
+//                 }
+//             }
+//         }
+//     });
+// };
+
+// // get all customers with selected booking properties and their payments
+// export const getAllCustomersWithBookingsAndPaymentsService = async () => {
+//     return await db.query.CustomersTable.findMany({
+//         columns: {
+//             firstName: true,
+//             lastName: true
+//         },
+//         with: {
+//             bookings: {
+//                 columns: {
+//                     bookingID: true,
+//                     rentalStartDate: true,
+//                     rentalEndDate: true,
+//                     totalAmount: true
+//                 },
+//                 with: {
+//                     payments: true
+//                 }
+//             }
+//         }
+//     });
+// };
 // get all customers
 export const getCustomerService = async () => {
   const customers = await db.query.CustomersTable.findMany();
@@ -40,7 +90,6 @@ export const getCustomerByIdService = async (id: number) => {
   });
   return customer;
 };
-
 //get customer by email
 export const getCustomerByEmailService = async (email: string) => {
   return await db.query.CustomersTable.findFirst({

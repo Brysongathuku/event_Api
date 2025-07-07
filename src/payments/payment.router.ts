@@ -4,6 +4,7 @@ import {
   getPaymentController,
   getPaymentByIdController,
   updatePaymentController,
+  getPaymentsByCustomerController,
   deletePaymentController,
 } from "./payment.controller";
 // import { adminRoleAuth, bothRoleAuth, userRoleAuth, } from '../middleware/bearAuth';
@@ -74,6 +75,13 @@ const payment = (app: Express) => {
       }
     }
   );
+  app.route("/payment/customer/:customerId").get(async (req, res, next) => {
+    try {
+      await getPaymentsByCustomerController(req, res);
+    } catch (error: any) {
+      next(error);
+    }
+  });
 };
 
 export default payment;

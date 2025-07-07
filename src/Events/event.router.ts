@@ -40,7 +40,7 @@ const event = (app: Express) => {
     }
   });
   // delete  event by  id
-  app.route("/event/id").put(async (req, res, next) => {
+  app.route("/event/:id").delete(async (req, res, next) => {
     try {
       await deleteEventController(req, res);
     } catch (error) {

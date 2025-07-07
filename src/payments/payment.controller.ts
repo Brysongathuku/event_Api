@@ -5,6 +5,7 @@ import {
   getPaymentByIdService,
   updatePaymentService,
   deletePaymentService,
+  getPaymentsByCustomerService,
 } from "./payment.service";
 
 export const registerPaymentController = async (
@@ -30,6 +31,33 @@ export const getPaymentController = async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
+};
+
+export const getPaymentsByCustomerController = async (
+  req: Request,
+  res: Response
+) => {
+  const customerId = parseInt(req.params.customerId); // ✅ matches route param name
+
+  if (isNaN(customerId)) {
+    return res.status(400).json({ message: "Invalid customer ID" });
+  }
+
+  const payments = await getPaymentsByCustomerService(customerId);
+
+  if (!payments || payments.length === 0) {
+    return res.status(404).json({
+      message: "No payments found for this customer",
+      customerId,
+    });
+  }
+
+  return res.status(200).json({
+    message: "Payments retrieved successfully",
+    customerId,
+    count: payments.length,
+    data: payments,
+  });
 };
 
 export const getPaymentByIdController = async (req: Request, res: Response) => {

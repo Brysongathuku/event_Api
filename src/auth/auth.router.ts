@@ -6,7 +6,9 @@ import {
   getCustomerByIdController,
   getCustomerController,
   updateCustomerController,
+  loginCustomerController,
   deleteCustomerController,
+  verifyCustomerController,
 } from "./auth.controller";
 
 const customer = (app: Express) => {
@@ -49,6 +51,23 @@ const customer = (app: Express) => {
   app.route("/customer/:id").delete(async (req, res, next) => {
     try {
       await deleteCustomerController(req, res);
+    } catch (error: any) {
+      next(error); // Passes the error to the next middleware
+    }
+  });
+
+  // customer login route
+  app.route("/auth/login").post(async (req, res, next) => {
+    try {
+      await loginCustomerController(req, res);
+    } catch (error: any) {
+      next(error); // Passes the error to the next middleware
+    }
+  });
+  // customer verification route
+  app.route("/auth/verify").post(async (req, res, next) => {
+    try {
+      await verifyCustomerController(req, res);
     } catch (error: any) {
       next(error); // Passes the error to the next middleware
     }

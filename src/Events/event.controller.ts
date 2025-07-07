@@ -14,7 +14,7 @@ export const CreateEventController = async (req: Request, res: Response) => {
 
     const created = await CreateEventService(event);
     if (!created) return res.json({ message: "event not created" });
-    return res.status(201).json({ message: created });
+    return res.status(201).json({ message: "event created successfully" });
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }

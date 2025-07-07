@@ -35,13 +35,9 @@ export const deletePaymentService = async (id: number) => {
   return deleted[0];
 };
 
-// export const PaymentsTable = pgTable("payments", {
-//   paymentID: serial("paymentID").primaryKey(),
-//   customerID: integer("customerID")
-//     .notNull()
-//     .references(() => CustomersTable.customerID, { onDelete: "cascade" }),
-//   bookingID: integer("bookingID")
-//     .notNull()
-//     .references(() => BookingsTable.bookingID, { onDelete: "cascade" }),
-//   // ... rest of fields
-// });
+export const getPaymentsByCustomerService = async (customerId: number) => {
+  return await db
+    .select()
+    .from(PaymentsTable)
+    .where(eq(PaymentsTable.customerID, customerId));
+};

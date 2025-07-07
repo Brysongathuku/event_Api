@@ -47,7 +47,7 @@ const ticket = (app: Express) => {
   );
 
   //get    Tickets   By   Customer  route
-  app.route("/customers/:customerID/tickets").get(
+  app.route("/customer/:customerID/ticket").get(
     // bothRoleAuth,
     async (req, res, next) => {
       try {
@@ -60,7 +60,7 @@ const ticket = (app: Express) => {
 
   //get Tickets  By   Status route
 
-  app.route("/tickets/status/:status").get(
+  app.route("/ticket/status/:status").get(
     // bothRoleAuth,
     async (req, res, next) => {
       try {
@@ -95,4 +95,4 @@ const ticket = (app: Express) => {
     }
   );
 };
-export  default   ticket;
+export default ticket;
