@@ -6,6 +6,7 @@ import booking from "./bookings/booking.router";
 import venue from "./venue/venue.routers";
 import event from "./Events/event.router";
 import ticket from "./support_tickets/support_tickets.router";
+import e from "express";
 
 const app = express();
 //MIDDLEWARE
@@ -25,3 +26,4 @@ app.get("/", (req, res) => {
 app.listen(8081, () => {
   console.log("Server is running on http://localhost:8081");
 });
+export default app;

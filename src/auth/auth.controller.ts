@@ -155,15 +155,15 @@ export const loginCustomerController = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       message: "Login Successful",
-      // token,
-      // user: {
-      //   // Return necessary user info, but NEVER the password
-      //   user_id: customerExist.customerID,
-      //   first_name: customerExist.firstName,
-      //   last_name: customerExist.lastName,
-      //   email: customerExist.email,
-      //   role: customerExist.role,
-      // },
+      token,
+      user: {
+        // Return necessary user info, but NEVER the password
+        user_id: customerExist.customerID,
+        first_name: customerExist.firstName,
+        last_name: customerExist.lastName,
+        email: customerExist.email,
+        role: customerExist.role,
+      },
     });
   } catch (error: any) {
     console.error("Login Error:", error);

@@ -3,7 +3,7 @@ import db from "../Drizzle/db";
 import { TIPayment, PaymentsTable } from "../Drizzle/schema";
 //
 export const createPaymentService = async (payment: TIPayment) => {
-  await db.insert(PaymentsTable).values(payment).returning();
+  await db.insert(PaymentsTable).values(payment);
   return "Payment added successfully";
 };
 
