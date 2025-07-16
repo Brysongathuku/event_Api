@@ -37,7 +37,7 @@ export const getPaymentsByCustomerController = async (
   req: Request,
   res: Response
 ) => {
-  const customerId = parseInt(req.params.customerId); // ✅ matches route param name
+  const customerId = parseInt(req.params.customerId);
 
   if (isNaN(customerId)) {
     return res.status(400).json({ message: "Invalid customer ID" });

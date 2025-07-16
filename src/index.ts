@@ -2,14 +2,14 @@ import express from "express";
 import customer from "./auth/auth.router";
 import payment from "./payments/payment.router";
 import booking from "./bookings/booking.router";
-
+import cors from "cors";
 import venue from "./venue/venue.routers";
 import event from "./Events/event.router";
 import ticket from "./support_tickets/support_tickets.router";
-import e from "express";
 
 const app = express();
 //MIDDLEWARE
+app.use(cors());
 app.use(express.json());
 //ROUTES
 

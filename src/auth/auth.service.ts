@@ -32,51 +32,6 @@ export const customerLoginService = async (customer: TSCustomer) => {
   });
 };
 
-// export const getCustomerWithBookingsAndPaymentsService = async (id: number) => {
-//     return await db.query.CustomersTable.findFirst({
-//         where: eq(CustomersTable.customerID, id),
-//         columns: {
-//             firstName: true,
-//             lastName: true
-//         },
-//         with: {
-//             bookings: {
-//                 columns: {
-//                     bookingID: true,
-//                     rentalStartDate: true,
-//                     rentalEndDate: true,
-//                     totalAmount: true
-//                 },
-//                 with: {
-//                     payments: true
-//                 }
-//             }
-//         }
-//     });
-// };
-
-// // get all customers with selected booking properties and their payments
-// export const getAllCustomersWithBookingsAndPaymentsService = async () => {
-//     return await db.query.CustomersTable.findMany({
-//         columns: {
-//             firstName: true,
-//             lastName: true
-//         },
-//         with: {
-//             bookings: {
-//                 columns: {
-//                     bookingID: true,
-//                     rentalStartDate: true,
-//                     rentalEndDate: true,
-//                     totalAmount: true
-//                 },
-//                 with: {
-//                     payments: true
-//                 }
-//             }
-//         }
-//     });
-// };
 // get all customers
 export const getCustomerService = async () => {
   const customers = await db.query.CustomersTable.findMany();

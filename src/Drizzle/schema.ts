@@ -54,7 +54,6 @@ export const VenuesTable = pgTable("venues", {
   address: text("address").notNull(),
   capacity: integer("capacity").notNull(),
   contactNumber: varchar("contact_number", { length: 20 }),
-  createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
 });
 
 // Events Table

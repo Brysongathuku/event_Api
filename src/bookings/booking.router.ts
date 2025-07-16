@@ -7,11 +7,11 @@ import {
   deleteBookingController,
   getBookingController,
 } from "./bookings.controller";
-// import { adminRoleAuth, bothRoleAuth, userRoleAuth, } from '../middleware/bearAuth';
+import { adminRoleAuth, bothRoleAuth, userRoleAuth, } from '../middleware/bearAuth';
 
 const booking = (app: Express) => {
   app.route("/booking/register").post(
-    //  userRoleAuth,
+     userRoleAuth,
     async (req, res, next) => {
       try {
         await createBookingController(req, res);
@@ -22,7 +22,7 @@ const booking = (app: Express) => {
   );
 
   app.route("/bookings").get(
-    //    adminRoleAuth,
+       adminRoleAuth,
     async (req, res, next) => {
       try {
         await getBookingController(req, res);
@@ -33,7 +33,7 @@ const booking = (app: Express) => {
   );
 
   app.route("/booking/:id").get(
-    // adminRoleAuth,
+     adminRoleAuth,
     async (req, res, next) => {
       try {
         await getBookingByIdController(req, res);
@@ -44,7 +44,7 @@ const booking = (app: Express) => {
   );
 
   app.route("/bookings/customer/:customerID").get(
-    //  userRoleAuth,
+   userRoleAuth,
     async (req, res, next) => {
       try {
         await getBookingsByCustomerIdController(req, res);
@@ -55,7 +55,7 @@ const booking = (app: Express) => {
   );
 
   app.route("/booking/:id").put(
-    //  bothRoleAuth,
+     bothRoleAuth,
     async (req, res, next) => {
       try {
         await updateBookingController(req, res);
@@ -66,7 +66,7 @@ const booking = (app: Express) => {
   );
 
   app.route("/booking/:id").delete(
-    //  adminRoleAuth,
+    adminRoleAuth,
     async (req, res, next) => {
       try {
         await deleteBookingController(req, res);
