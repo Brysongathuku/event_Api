@@ -6,7 +6,7 @@ import cors from "cors";
 import venue from "./venue/venue.routers";
 import event from "./Events/event.router";
 import ticket from "./support_tickets/support_tickets.router";
-
+import analytics from "./Analytics/analyticsRoutes";
 const app = express();
 //MIDDLEWARE
 app.use(cors());
@@ -19,6 +19,7 @@ booking(app);
 venue(app);
 event(app);
 ticket(app);
+analytics(app);
 
 app.get("/", (req, res) => {
   res.send("hello world");

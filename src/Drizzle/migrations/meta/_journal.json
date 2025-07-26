@@ -15,6 +15,20 @@
       "when": 1751812018326,
       "tag": "0001_amazing_loners",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752754266910,
+      "tag": "0002_gigantic_frank_castle",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1753429343480,
+      "tag": "0003_bitter_glorian",
+      "breakpoints": true
     }
   ]
 }

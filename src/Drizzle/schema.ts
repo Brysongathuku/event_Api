@@ -47,27 +47,29 @@ export const CustomersTable = pgTable("customers", {
   updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow(),
 });
 
-// Venues Table
+// Venues Table Schema
 export const VenuesTable = pgTable("venues", {
   venueID: serial("venueID").primaryKey(),
-  name: varchar("name", { length: 100 }).notNull(),
+  venueName: varchar("venue_name", { length: 100 }).notNull(),
   address: text("address").notNull(),
+  description: text("description"),
   capacity: integer("capacity").notNull(),
-  contactNumber: varchar("contact_number", { length: 20 }),
+  imageUrl: text("imageUrl"), // Optional: make .notNull() if required
 });
 
-// Events Table
+//Events table
 export const EventsTable = pgTable("events", {
   eventID: serial("eventID").primaryKey(),
   title: varchar("title", { length: 200 }).notNull(),
   description: text("description"),
-  eventDate: timestamp("event_date", { mode: "string" }).notNull(),
-  startTime: timestamp("start_time", { mode: "string" }).notNull(),
-  endTime: timestamp("end_time", { mode: "string" }),
-  ticketPrice: decimal("ticket_price", { precision: 10, scale: 2 }).notNull(),
-  availableTickets: integer("available_tickets").notNull(),
-  totalTickets: integer("total_tickets").notNull(),
-  isActive: boolean("is_active").default(true),
+  eventDate: timestamp("eventDate", { mode: "string" }).notNull(),
+  startTime: timestamp("startTime", { mode: "string" }).notNull(),
+  endTime: timestamp("endTime", { mode: "string" }),
+  ticketPrice: decimal("ticketPrice", { precision: 10, scale: 2 }).notNull(),
+  availableTickets: integer("availableTickets").notNull(),
+  totalTickets: integer("totalTickets").notNull(),
+  isActive: boolean("isActive").default(true),
+  imageUrl: varchar("imageUrl", { length: 500 }), // ✅ New image URL column
   venueID: integer("venueID").references(() => VenuesTable.venueID, {
     onDelete: "set null",
   }),
@@ -84,10 +86,10 @@ export const BookingsTable = pgTable("bookings", {
   eventID: integer("eventID")
     .notNull()
     .references(() => EventsTable.eventID, { onDelete: "cascade" }),
-  numberOfTickets: integer("number_of_tickets").notNull().default(1),
-  totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
-  bookingDate: timestamp("booking_date", { mode: "string" }).defaultNow(),
-  bookingStatus: varchar("booking_status", { length: 20 }).default("Confirmed"),
+  numberOfTickets: integer("numberofTickets").notNull().default(1),
+  totalAmount: decimal("totalAmount", { precision: 10, scale: 2 }).notNull(),
+  bookingDate: timestamp("bookingDate", { mode: "string" }).defaultNow(),
+  bookingStatus: varchar("bookingStatus", { length: 20 }).default("Confirmed"),
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow(),
 });
@@ -102,10 +104,10 @@ export const PaymentsTable = pgTable("payments", {
     .notNull()
     .references(() => BookingsTable.bookingID, { onDelete: "cascade" }),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
-  paymentStatus: PaymentStatusEnum("payment_status").default("Pending"),
-  paymentDate: timestamp("payment_date", { mode: "string" }).defaultNow(),
-  paymentMethod: varchar("payment_method", { length: 50 }),
-  transactionID: varchar("transaction_id", { length: 100 }),
+  paymentStatus: PaymentStatusEnum("paymentStatus").default("Pending"),
+  paymentDate: timestamp("paymentDate", { mode: "string" }).defaultNow(),
+  paymentMethod: varchar("paymentMethod", { length: 50 }),
+  transactionID: varchar("transactionId", { length: 100 }),
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow(),
 });

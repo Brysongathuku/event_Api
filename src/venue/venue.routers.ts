@@ -24,7 +24,7 @@ const venue = (app: Express) => {
   });
 
   // get all venues route
-  app.route("/venues").get(bothRoleAuth, async (req, res, next) => {
+  app.route("/venues").get(async (req, res, next) => {
     try {
       await getVenueController(req, res);
     } catch (error: any) {
@@ -33,13 +33,16 @@ const venue = (app: Express) => {
   });
 
   // get venue by id route
-  app.route("/venue/:id").get(adminRoleAuth, async (req, res, next) => {
-    try {
-      await getVenueByIdController(req, res);
-    } catch (error: any) {
-      next(error);
+  app.route("/venue/:id").get(
+    // adminRoleAuth,
+    async (req, res, next) => {
+      try {
+        await getVenueByIdController(req, res);
+      } catch (error: any) {
+        next(error);
+      }
     }
-  });
+  );
 
   // get venue with available event route
   app.route("/venues-event/:id").get(bothRoleAuth, async (req, res, next) => {
@@ -51,22 +54,28 @@ const venue = (app: Express) => {
   });
 
   // update venue by id route
-  app.route("/venue/:id").put(adminRoleAuth, async (req, res, next) => {
-    try {
-      await updateVenueController(req, res);
-    } catch (error: any) {
-      next(error);
+  app.route("/venue/:id").put(
+    // adminRoleAuth,
+    async (req, res, next) => {
+      try {
+        await updateVenueController(req, res);
+      } catch (error: any) {
+        next(error);
+      }
     }
-  });
+  );
 
   // delete venue by id route
-  app.route("/venue/:id").delete(adminRoleAuth, async (req, res, next) => {
-    try {
-      await deleteVenueController(req, res);
-    } catch (error: any) {
-      next(error);
+  app.route("/venue/:id").delete(
+    // adminRoleAuth,
+    async (req, res, next) => {
+      try {
+        await deleteVenueController(req, res);
+      } catch (error: any) {
+        next(error);
+      }
     }
-  });
+  );
 };
 
 export default venue;

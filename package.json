@@ -14,8 +14,17 @@
     "test": "jest",
     "smoke:login": "k6 run Performance/smoke/smoke.test.ts",
     "smoke:register": "k6 run Performance/Smoke/register.smoke.ts",
-   "smoke:event": "k6 run Performance/Smoke/event.get.smoke.ts",
-   "smoke:venue": "k6 run Performance/Smoke/venue.get.smoke.ts"
+    "smoke:event": "k6 run Performance/Smoke/event.get.smoke.ts",
+    "smoke:venue": "k6 run Performance/Smoke/venue.get.smoke.ts",
+    "load:event": "k6 run Performance/Load/event.get.load.ts",
+    "load:venue": "k6 run Performance/Load/venue.get.load.ts",
+    "stress:event": "k6 run Performance/stress/event.get.stress.ts",
+    "spike:event": "k6 run Performance/Spike/event.get.spike.ts",
+    "spike:venue": "k6 run Performance/Spike/venue.get.spike.ts",
+    "soak:event": "k6 run Performance/Soak/event.get.soak.ts",
+    "soak:venue": "k6 run Performance/Soak/venue.get.soak.ts",
+    "breakpoint:event": "k6 run Performance/Breakpoint/event.get.breakpoint.ts",
+    "breakpoint:venue": "k6 run Performance/Breakpoint/venue.get.breakpoint.ts"
   },
   "keywords": [],
   "author": "",
@@ -39,6 +48,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",

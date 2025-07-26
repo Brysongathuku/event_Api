@@ -8,6 +8,7 @@ import {
   EventsTable,
   BookingsTable,
 } from "../../src/Drizzle/schema";
+import { eq } from "drizzle-orm";
 
 let customerToken: string;
 let customerID: number;
@@ -17,12 +18,16 @@ let eventID: number;
 let bookingID: number;
 
 describe(" Booking API", () => {
+  afterAll(async () => {
+    await db
+      .delete(CustomersTable)
+      .where(eq(CustomersTable.customerID, customerID));
+    await db
+      .delete(BookingsTable)
+      .where(eq(BookingsTable.customerID, customerID));
+    await db.$client.end();
+  });
   beforeAll(async () => {
-    // Cleanup tables
-    await db.delete(BookingsTable);
-    await db.delete(EventsTable);
-    await db.delete(CustomersTable);
-
     // Create a user
     const [user] = await db
       .insert(CustomersTable)

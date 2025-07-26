@@ -19,6 +19,9 @@ main()
     console.error("Error connecting to the database:", error);
   });
 
-const db = drizzle(client, { schema, logger: true });
+const db = drizzle(client, {
+  schema,
+  logger: true,
+});
 
 export default db;
