@@ -40,7 +40,7 @@ export const CustomersTable = pgTable("customers", {
   password: varchar("password", { length: 255 }).notNull(),
   contactPhone: varchar("contact_phone", { length: 20 }),
   address: varchar("address", { length: 255 }),
-  imageUrl: varchar("imageUrl", { length: 500 }), // ✅ New image URL column for profile picture
+  imageUrl: varchar("imageUrl", { length: 500 }),
   role: RoleEnum("role").default("user"),
   isVerified: boolean("is_verified").default(false),
   verificationCode: varchar("verification_code", { length: 10 }),
@@ -70,7 +70,7 @@ export const EventsTable = pgTable("events", {
   availableTickets: integer("availableTickets").notNull(),
   totalTickets: integer("totalTickets").notNull(),
   isActive: boolean("isActive").default(true),
-  imageUrl: varchar("imageUrl", { length: 500 }), // ✅ New image URL column
+  imageUrl: varchar("imageUrl", { length: 500 }),
   venueID: integer("venueID").references(() => VenuesTable.venueID, {
     onDelete: "set null",
   }),
