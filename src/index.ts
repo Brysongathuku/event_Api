@@ -25,7 +25,7 @@ analytics(app);
 app.get("/", (req, res) => {
   res.send("hello world");
 });
-const PORT = 8080;
+const PORT = 10000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
