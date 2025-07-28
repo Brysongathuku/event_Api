@@ -40,6 +40,7 @@ export const CustomersTable = pgTable("customers", {
   password: varchar("password", { length: 255 }).notNull(),
   contactPhone: varchar("contact_phone", { length: 20 }),
   address: varchar("address", { length: 255 }),
+  imageUrl: varchar("imageUrl", { length: 500 }), // ✅ New image URL column for profile picture
   role: RoleEnum("role").default("user"),
   isVerified: boolean("is_verified").default(false),
   verificationCode: varchar("verification_code", { length: 10 }),
