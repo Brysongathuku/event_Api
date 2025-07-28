@@ -7,6 +7,7 @@ import venue from "./venue/venue.routers";
 import event from "./Events/event.router";
 import ticket from "./support_tickets/support_tickets.router";
 import analytics from "./Analytics/analyticsRoutes";
+import dotenv from "dotenv/config";
 const app = express();
 //MIDDLEWARE
 app.use(cors());
@@ -24,7 +25,8 @@ analytics(app);
 app.get("/", (req, res) => {
   res.send("hello world");
 });
-app.listen(8081, () => {
-  console.log("Server is running on http://localhost:8081");
+const PORT = 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 export default app;
