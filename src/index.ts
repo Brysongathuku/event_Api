@@ -7,6 +7,7 @@ import venue from "./venue/venue.routers";
 import event from "./Events/event.router";
 import ticket from "./support_tickets/support_tickets.router";
 import analytics from "./Analytics/analyticsRoutes";
+import mpesaRoutes from "./mpesa/mpesa.router";
 import dotenv from "dotenv/config";
 const app = express();
 //MIDDLEWARE
@@ -21,11 +22,12 @@ venue(app);
 event(app);
 ticket(app);
 analytics(app);
+app.use("/api/mpesa", mpesaRoutes);
 
 app.get("/", (req, res) => {
   res.send("hello world");
 });
-const PORT = 8080;
+const PORT = 8081;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

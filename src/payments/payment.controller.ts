@@ -15,7 +15,11 @@ export const registerPaymentController = async (
   try {
     const createPayment = await createPaymentService(req.body);
     if (!createPayment) return res.json({ message: "Payment not created" });
-    return res.status(201).json({ message: createPayment });
+
+    return res.status(201).json({
+      message: "Payment created successfully",
+      data: createPayment,
+    });
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
