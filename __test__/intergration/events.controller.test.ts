@@ -12,7 +12,7 @@ let eventID: number;
 describe("📅 Event API", () => {
   afterAll(async () => {
     await db.delete(EventsTable).where(eq(EventsTable.eventID, eventID));
-    await db.$client.end();
+    // await db.$client.end();
   });
   beforeAll(async () => {
     //  Create Admin

@@ -26,29 +26,30 @@ beforeEach(() => {
 });
 
 describe("Payment Service", () => {
-  describe("createPaymentService", () => {
-    it("should insert a payment and return success message", async () => {
-      const payment: TIPayment = {
-        paymentID: 1,
-        customerID: 101,
-        bookingID: 201,
-        amount: "5000.00",
-        paymentStatus: "Pending",
-        paymentDate: "2024-07-01T08:30:00.000Z",
-        paymentMethod: "M-Pesa",
-        transactionID: "MPESA123456789",
-        createdAt: "2024-07-01T08:31:00.000Z",
-        updatedAt: "2024-07-01T08:31:00.000Z",
-      };
+  it("should insert a payment and return created payment", async () => {
+    const payment: TIPayment = {
+      paymentID: 1,
+      customerID: 101,
+      bookingID: 201,
+      amount: "5000.00",
+      paymentStatus: "Pending",
+      paymentDate: "2024-07-01T08:30:00.000Z",
+      paymentMethod: "M-Pesa",
+      transactionID: "MPESA123456789",
+      createdAt: "2024-07-01T08:31:00.000Z",
+      updatedAt: "2024-07-01T08:31:00.000Z",
+    };
 
-      (db.insert as jest.Mock).mockReturnValue({
-        values: jest.fn().mockResolvedValueOnce([{}]),
-      });
-
-      const result = await createPaymentService(payment);
-      expect(db.insert).toHaveBeenCalledWith(PaymentsTable);
-      expect(result).toBe("Payment added successfully");
+    (db.insert as jest.Mock).mockReturnValue({
+      values: jest.fn().mockReturnValue({
+        returning: jest.fn().mockResolvedValue([payment]),
+      }),
     });
+
+    const result = await createPaymentService(payment);
+
+    expect(db.insert).toHaveBeenCalledWith(PaymentsTable);
+    expect(result).toEqual(payment);
   });
 
   describe("getPaymentService", () => {

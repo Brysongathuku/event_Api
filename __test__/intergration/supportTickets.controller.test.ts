@@ -22,7 +22,7 @@ describe(" Support Tickets API", () => {
     await db
       .delete(CustomerSupportTicketsTable)
       .where(eq(CustomerSupportTicketsTable.customerID, customerID));
-    await db.$client.end();
+    // await db.$client.end();
   });
   beforeAll(async () => {
     const hashedPassword = bcrypt.hashSync("UserPass123", 10);
